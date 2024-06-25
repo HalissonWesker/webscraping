@@ -10,7 +10,7 @@ Este projeto foi desenvolvido como parte de um desafio técnico para capturar da
 
 ## Estrutura do Projeto
 
-O projeto foi estruturado utilizando o framework Laravel, seguindo as melhores práticas de design de software, como a separação de responsabilidades através de camadas e o uso do padrão Repository para interagir com o banco de dados.
+O projeto foi estruturado utilizando o framework Laravel, seguindo boas práticas de design de software, como a separação de responsabilidades através de camadas e o uso do padrão Repository para interagir com o banco de dados.
 
 ### Principais Diretórios e Arquivos
 
@@ -40,20 +40,25 @@ O projeto foi estruturado utilizando o framework Laravel, seguindo as melhores p
 
 ### Passos para Configuração com Docker
 
-1. Clone o repositório:
+# Configuração do Projeto Web Scraping Challenge
 
-   ```bash
-   git clone <repository-url>
-   cd webScraping-challenge
-Copie o arquivo .env.example para .env e configure as variáveis de ambiente:
+## Clonar o Repositório
 
-bash
-Copiar código
+Clone o repositório e acesse o diretório do projeto:
+
+git clone <https://github.com/HalissonWesker/webscraping>
+
+cd webScraping-challenge
+
+## Configuração com Docker
+
+1. Copie o arquivo `.env.example` para `.env` e configure as variáveis de ambiente:
+
 cp .env.example .env
-Configure as seguintes variáveis de ambiente no arquivo .env:
 
-env
-Copiar código
+2. Configure as variáveis de ambiente no arquivo `.env`:
+
+```dotenv 
 DB_CONNECTION=mysql
 DB_HOST=mysql
 DB_PORT=3306
@@ -67,89 +72,92 @@ REDIS_PASSWORD=null
 REDIS_PORT=6379
 
 CACHE_DRIVER=redis
-Suba os containers Docker:
+```
 
-bash
-Copiar código
-docker-compose up -d --build
-Execute as migrações:
 
-bash
-Copiar código
-docker-compose exec app php artisan migrate
-Passos para Configuração sem Docker
-Instale o PHP, Composer e MySQL (pode usar XAMPP para facilitar a configuração do MySQL).
+3. Suba os containers Docker: `docker-compose up -d --build
+`
 
-Clone o repositório:
+4. Execute as migrações:
+`docker-compose exec app php artisan migrate`
 
-bash
-Copiar código
-git clone <repository-url>
+## Configuração sem Docker
+
+1. Instale o PHP, Composer e MySQL (por exemplo, usando XAMPP para MySQL).
+
+2. Clone o repositório e acesse o diretório do projeto:
+
+```bash 
+git clone https://github.com/hbaraujo-stf/webScraping-challenge.git
+```
+Depois :
+
+```bash
 cd webScraping-challenge
-Copie o arquivo .env.example para .env e configure as variáveis de ambiente:
+````
 
-bash
-Copiar código
+3. Copie o arquivo .env.example para .env e configure as variáveis de ambiente:
 cp .env.example .env
-Configure as variáveis de ambiente no arquivo .env para apontar para o seu servidor MySQL local:
 
-env
-Copiar código
+4. Configure as variáveis de ambiente no arquivo .env para apontar para o MySQL local:
+
+```dotenv
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
 DB_DATABASE=webscrap
 DB_USERNAME=root
 DB_PASSWORD=root
-Instale as dependências do PHP:
+```
 
-bash
-Copiar código
-composer install
-Execute as migrações:
+## Endpoints da API
 
-bash
-Copiar código
-php artisan migrate
-Inicie o servidor local do Laravel:
+### Buscar Dados de Moedas
 
-bash
-Copiar código
-php artisan serve
-Uso
-Endpoints da API
-Buscar Dados de Moedas
-URL: /api/currency
+- **URL:** `/api/currency`
+- **Método:** POST
 
-Método: POST
+Para buscar os dados de moedas, utilize o endpoint `/api/currency` com o método HTTP POST. Você pode enviar os parâmetros necessários no corpo da requisição no formato JSON.
+
+Exemplo de requisição com cURL:
+
+```bash
+curl -X POST http://localhost:8000/api/currency -H "Content-Type: application/json" -d '{"code":"GBP"}'
+```
 
 Body:
 
+```json
 json
-Copiar código
+
 {
   "code": "GBP"
 }
+```
 ou
-
+```json
 json
-Copiar código
+
 {
   "number": 826
 }
-Exemplo de Requisição com cURL:
+```
+### Exemplo de Requisição com cURL:
 
-bash
-Copiar código
+```bash
 curl -X POST http://localhost:8000/api/currency -H "Content-Type: application/json" -d '{"code":"GBP"}'
-ou
+```
 
-bash
-Copiar código
+
+ou
+```bash
 curl -X POST http://localhost:8000/api/currency -H "Content-Type: application/json" -d '{"number":826}'
-Resposta Esperada
+```
+
+
+### Resposta Esperada
+```json
 json
-Copiar código
 [
   {
     "code": "GBP",
@@ -176,19 +184,20 @@ Copiar código
     ]
   }
 ]
+```
 Testes
 Para executar os testes, utilize o seguinte comando:
 
-bash
-Copiar código
+```bash
 docker-compose exec app php artisan test
+```
 ou, se estiver rodando localmente sem Docker:
-
-bash
-Copiar código
+```bash
 php artisan test
-Contribuição
+```
+
+### Contribuição
 Se você deseja contribuir para este projeto, por favor, siga as diretrizes de contribuição e abra um pull request.
 
-Licença
+### Licença
 Este projeto está licenciado sob a MIT License. Veja o arquivo LICENSE para mais detalhes.
